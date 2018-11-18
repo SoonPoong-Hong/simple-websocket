@@ -8,18 +8,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Profile("stomp")
-//@EnableWebSocketMessageBroker
+@EnableWebSocketMessageBroker // => 이건 그냥 선언적인 것이므로 이렇게 텅빈 Configuration에 해도 상관없다.
 @Configuration
-public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
+public class StompWebSocketConfig2  {
 
-    @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/stomp-chat").setAllowedOrigins("*").withSockJS();
-    }
-
-    @Override
-    public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.setApplicationDestinationPrefixes("/publish");
-        registry.enableSimpleBroker("/subscribe");
-    }
 }
