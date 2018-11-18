@@ -12,7 +12,7 @@
 <div class="content" data-room-id="{{room.id}}" data-member="{{member}}">
     <ul class="chat_box">
     </ul>
-    <input name="message">
+    <input id="msg" name="message">
     <button class="send">보내기</button>
 </div>
 <script>
@@ -37,10 +37,21 @@
         });
 
         sendBtn.click(function () {
+        	send();
+        });
+        
+        function send(){
             var message = messageInput.val();
             client.send('/publish/chat/message', {}, JSON.stringify({chatRoomId: roomId, type: 'CHAT', message: message, writer: member}));
             messageInput.val('');
+        }
+        
+        $('msg').keyup(function(e) {
+            if (e.keyCode == 13){
+	        	send();
+            }        
         });
+
     });
 </script>
 </body>

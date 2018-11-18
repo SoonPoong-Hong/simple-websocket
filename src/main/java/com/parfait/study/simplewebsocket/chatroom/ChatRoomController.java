@@ -16,30 +16,31 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
-    private final ChatRoomRepository repository;
-    private final String listViewName;
-    private final String detailViewName;
-    private final AtomicInteger seq = new AtomicInteger(0);
+	private final ChatRoomRepository repository;
+	private final String listViewName;
+	private final String detailViewName;
+	private final AtomicInteger seq = new AtomicInteger(0);
 
-    @Autowired
-    public ChatRoomController(ChatRoomRepository repository, @Value("${viewname.chatroom.list}") String listViewName, @Value("${viewname.chatroom.detail}") String detailViewName) {
-        this.repository = repository;
-        this.listViewName = listViewName;
-        this.detailViewName = detailViewName;
-    }
+	@Autowired
+	public ChatRoomController(ChatRoomRepository repository, @Value("${viewname.chatroom.list}") String listViewName,
+			@Value("${viewname.chatroom.detail}") String detailViewName) {
+		this.repository = repository;
+		this.listViewName = listViewName;
+		this.detailViewName = detailViewName;
+	}
 
-    @GetMapping("/rooms")
-    public String rooms(Model model) {
-        model.addAttribute("rooms", repository.getChatRooms());
-        return listViewName;
-    }
+	@GetMapping("/rooms")
+	public String rooms(Model model) {
+		model.addAttribute("rooms", repository.getChatRooms());
+		return listViewName;
+	}
 
-    @GetMapping("/rooms/{id}")
-    public String room(@PathVariable String id, Model model) {
-        ChatRoom room = repository.getChatRoom(id);
-        model.addAttribute("room", room);
-        model.addAttribute("member", "member" + seq.incrementAndGet());
+	@GetMapping("/rooms/{id}")
+	public String room(@PathVariable String id, Model model) {
+		ChatRoom room = repository.getChatRoom(id);
+		model.addAttribute("room", room);
+		model.addAttribute("member", "member" + seq.incrementAndGet());
 
-        return detailViewName;
-    }
+		return detailViewName;
+	}
 }
